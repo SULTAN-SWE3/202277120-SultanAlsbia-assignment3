@@ -3,168 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sultan Alsbia | Interactive Portfolio</title>
+  <meta
+    name="description"
+    content="Assignment 3 portfolio for Sultan Alsbia with API integration, advanced filtering, saved state, and client-side validation."
+  />
+  <title>Sultan Alsbia | Assignment 3 Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="header-inner">
-      <div>
-        <p class="eyebrow">Assignment 2 Portfolio</p>
-        <h1>Sultan Alsbia</h1>
-        <p class="subtitle">A growing front-end developer building clean, responsive, interactive websites.</p>
-      </div>
+    <div class="header-shell">
+      <a class="brand" href="#top">
+        <span class="brand-mark">SA</span>
+        <span>
+          <strong>Sultan Alsbia</strong>
+          <small>Assignment 3 Portfolio</small>
+        </span>
+      </a>
 
-      <div class="header-actions">
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a href="#home">Home</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <button id="themeBtn" type="button" aria-label="Toggle color theme">Switch Theme</button>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#projects">Projects</a>
+        <a href="#github">GitHub Feed</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="header-tools">
+        <button id="welcomeToggleBtn" class="ghost-button" type="button" aria-expanded="true">
+          Hide Welcome
+        </button>
+        <button id="themeBtn" class="primary-button" type="button" aria-label="Toggle color theme">
+          Dark Mode
+        </button>
       </div>
     </div>
   </header>
 
-  <main>
-    <section id="home" class="hero reveal">
+  <main id="top">
+    <section class="hero-panel reveal">
       <div class="hero-copy">
-        <p class="eyebrow">Interactive Experience</p>
-        <h2>My portfolio now responds to user actions instead of only showing static content.</h2>
-        <p>
-          This updated version adds section switching, project filtering, saved preferences, and better form feedback to create a more modern user experience.
+        <p class="section-kicker">Advanced Functionality</p>
+        <h1>Portfolio website upgraded with API data, multi-step logic, and saved user state.</h1>
+        <p class="hero-text">
+          This version builds on my previous portfolio by adding GitHub API integration, project filtering and sorting, contact validation rules,
+          visitor personalization, and performance-focused front-end improvements.
         </p>
+
+        <div class="hero-stats">
+          <article>
+            <span class="stat-label">Visitor Timer</span>
+            <strong id="visitTimer">00:00</strong>
+          </article>
+          <article>
+            <span class="stat-label">Selected Track</span>
+            <strong id="savedTrackLabel">Not selected yet</strong>
+          </article>
+          <article>
+            <span class="stat-label">Theme State</span>
+            <strong id="themeStatus">Light</strong>
+          </article>
+        </div>
       </div>
 
-      <aside class="welcome-panel" aria-labelledby="welcome-title">
-        <h3 id="welcome-title">Personalize your visit</h3>
-        <label for="visitorName">Enter your name</label>
-        <div class="welcome-form">
-          <input type="text" id="visitorName" placeholder="Your name" maxlength="30" />
-          <button id="saveNameBtn" type="button">Save</button>
+      <aside id="welcomePanel" class="welcome-card">
+        <p class="section-kicker">Remembered State</p>
+        <h2>Personalize your visit</h2>
+        <label for="visitorName">Visitor name</label>
+        <div class="inline-form">
+          <input id="visitorName" type="text" maxlength="30" placeholder="Enter your name" />
+          <button id="saveNameBtn" class="primary-button" type="button">Save</button>
         </div>
         <p id="greetingMessage" class="status-text" aria-live="polite">Welcome to my portfolio.</p>
+        <p class="helper-text">Your name, theme, selected track, and welcome panel state are saved in local storage.</p>
       </aside>
     </section>
 
-    <section id="portfolio" class="portfolio reveal">
+    <section class="content-panel reveal">
       <div class="section-heading">
-        <p class="eyebrow">Dynamic Content</p>
-        <h2>Explore my portfolio</h2>
-        <p>Switch between sections and filter projects live while typing.</p>
+        <p class="section-kicker">Conditional Content</p>
+        <h2>Choose your viewer track</h2>
+        <p>Selecting a track changes the recommendation message and highlights the projects that best match that level.</p>
       </div>
 
-      <div class="tab-controls" role="tablist" aria-label="Portfolio sections">
-        <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="panel-about" id="tab-about" data-tab="about">
-          About
-        </button>
-        <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-projects" id="tab-projects" data-tab="projects">
-          Projects
-        </button>
-        <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-skills" id="tab-skills" data-tab="skills">
-          Skills
-        </button>
+      <div class="track-selector" role="radiogroup" aria-label="Project level selector">
+        <button class="track-button active" type="button" data-track="all" aria-pressed="true">All Visitors</button>
+        <button class="track-button" type="button" data-track="beginner" aria-pressed="false">Beginner</button>
+        <button class="track-button" type="button" data-track="advanced" aria-pressed="false">Advanced</button>
       </div>
 
-      <div class="tab-panels">
-        <section class="tab-panel active" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
-          <h3>About Me</h3>
-          <p>
-            I am a software engineering student learning how to build websites that are responsive, readable, and easy to use.
-            I enjoy improving my front-end skills by creating projects with HTML, CSS, and JavaScript.
-          </p>
-          <p>
-            For Assignment 2, I focused on adding user interaction, storing preferences, and improving feedback so the website feels more complete.
-          </p>
-        </section>
-
-        <section class="tab-panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" hidden>
-          <div class="projects-toolbar">
-            <div>
-              <h3>Projects</h3>
-              <p>Type to filter the project list instantly.</p>
-            </div>
-            <label class="search-field" for="projectSearch">
-              <span>Search projects</span>
-              <input type="search" id="projectSearch" placeholder="Search by title or keyword" />
-            </label>
-          </div>
-
-          <div class="project-grid" id="projectList">
-            <article class="project-card reveal-item" data-search="portfolio website html css javascript responsive">
-              <img src="assets/images/project1.png" alt="Preview of the personal portfolio website project" />
-              <div class="project-content">
-                <h4>Personal Portfolio Website</h4>
-                <p>
-                  A responsive personal portfolio built with HTML, CSS, and JavaScript to present my profile, projects, and contact information.
-                </p>
-                <span class="tag">Responsive Design</span>
-              </div>
-            </article>
-
-            <article class="project-card reveal-item" data-search="landing page html css flexbox grid modern">
-              <img src="assets/images/project2.png" alt="Preview of the simple landing page project" />
-              <div class="project-content">
-                <h4>Simple Landing Page</h4>
-                <p>
-                  A modern landing page focused on layout practice using Flexbox, Grid, spacing, and mobile-friendly structure.
-                </p>
-                <span class="tag">Layout Practice</span>
-              </div>
-            </article>
-          </div>
-
-          <p id="emptyState" class="empty-state" hidden>No projects found. Try a different keyword.</p>
-        </section>
-
-        <section class="tab-panel" id="panel-skills" role="tabpanel" aria-labelledby="tab-skills" hidden>
-          <h3>Skills in Progress</h3>
-          <div class="skills-list">
-            <div class="skill-card">
-              <h4>HTML5</h4>
-              <p>Semantic page structure, accessible forms, and readable content sections.</p>
-            </div>
-            <div class="skill-card">
-              <h4>CSS3</h4>
-              <p>Responsive layouts, transitions, visual hierarchy, and theme styling.</p>
-            </div>
-            <div class="skill-card">
-              <h4>JavaScript</h4>
-              <p>DOM interaction, localStorage, validation, filtering, and dynamic messages.</p>
-            </div>
-          </div>
-        </section>
+      <div id="trackMessage" class="message-card" aria-live="polite">
+        Viewing all projects. Use the filter and sort controls below to explore the portfolio.
       </div>
     </section>
 
-    <section id="contact" class="contact reveal">
+    <section id="projects" class="content-panel reveal">
       <div class="section-heading">
-        <p class="eyebrow">User Feedback</p>
-        <h2>Contact Me</h2>
-        <p>This form validates input and shows clear messages after each action.</p>
+        <p class="section-kicker">Complex Logic</p>
+        <h2>Project explorer</h2>
+        <p>Projects can be filtered by category and track, then sorted by date or title using a single shared state object.</p>
       </div>
 
-      <form id="contactForm" novalidate>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Your name" />
+      <div class="controls-grid">
+        <label>
+          <span>Category</span>
+          <select id="categoryFilter">
+            <option value="all">All categories</option>
+            <option value="web">Web</option>
+            <option value="ui">UI/UX</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+        </label>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="yourname@example.com" />
+        <label>
+          <span>Sort by</span>
+          <select id="sortProjects">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="title">Title A-Z</option>
+          </select>
+        </label>
+      </div>
 
-        <label for="userMessage">Message</label>
-        <textarea id="userMessage" name="message" placeholder="Tell me about your idea"></textarea>
+      <div id="projectList" class="project-grid" aria-live="polite"></div>
+      <p id="projectEmptyState" class="empty-state" hidden>No projects match the current filter rules.</p>
+    </section>
 
-        <button type="submit">Send Message</button>
+    <section id="github" class="content-panel reveal">
+      <div class="section-heading">
+        <p class="section-kicker">API Integration</p>
+        <h2>Latest GitHub repositories</h2>
+        <p>The portfolio fetches public repository data from the GitHub API and shows the latest updated work.</p>
+      </div>
+
+      <div class="api-toolbar">
+        <p class="helper-text">Source: GitHub REST API for user <strong id="githubUsername">sultan-swe3</strong></p>
+        <button id="reloadReposBtn" class="ghost-button" type="button">Reload Repositories</button>
+      </div>
+
+      <div id="repoStatus" class="status-banner">Loading repositories...</div>
+      <div id="repoList" class="repo-grid"></div>
+    </section>
+
+    <section id="contact" class="content-panel reveal">
+      <div class="section-heading">
+        <p class="section-kicker">Validated Input</p>
+        <h2>Contact form</h2>
+        <p>The form only submits after checking required fields, email format, and message length.</p>
+      </div>
+
+      <form id="contactForm" class="contact-form" novalidate>
+        <label for="contactName">Name</label>
+        <input id="contactName" name="name" type="text" placeholder="Your full name" />
+
+        <label for="contactEmail">Email</label>
+        <input id="contactEmail" name="email" type="email" placeholder="name@example.com" />
+
+        <label for="contactReason">Reason</label>
+        <select id="contactReason" name="reason">
+          <option value="">Choose a reason</option>
+          <option value="project">Project collaboration</option>
+          <option value="feedback">Portfolio feedback</option>
+          <option value="question">General question</option>
+        </select>
+
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="message" rows="6" placeholder="Write at least 20 characters"></textarea>
+
+        <button class="primary-button" type="submit">Send Message</button>
         <p id="formFeedback" class="form-feedback" aria-live="polite"></p>
       </form>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Sultan Alsbia</p>
+  <footer class="site-footer">
+    <p>&copy; 2026 Sultan Alsbia. Built for SWE363 Assignment 3.</p>
   </footer>
 
   <script src="js/script.js"></script>
