@@ -46,7 +46,7 @@ This project is my Assignment 3 portfolio website for SWE363. It extends the ear
 AI tools were used for planning, debugging, refining validation logic, improving structure, and drafting documentation. Full details are available in `docs/ai-usage-report.md`.
 
 ## Optional Deployment
-You can deploy this project using GitHub Pages, Netlify, or Vercel.
+Demo link: https://sultan-swe3.github.io/202277120-SultanAlsbia-assignment3/
 
 ## Author
 Sultan Alsbia
